@@ -10,7 +10,19 @@ FetchContent_Declare(SFML
         GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(Scheduler src/main.cpp src/Application/Application.cpp src/Application/Application.h src/Scheduler/Scheduler.cpp src/Scheduler/Scheduler.h src/Window/Window.cpp src/Window/Window.h src/constants_storage.h)
+add_executable(Scheduler src/main.cpp
+                         src/Application/Application.h
+                         src/Scheduler/Scheduler.h
+                         src/Window/Window.h
+                         src/constants_storage.h
+                         src/Scheduler/Lab_1/SchedulerFCFS.h
+                         src/Scheduler/Lab_2/SchedulerRR.h
+                         src/Application/Application.cpp
+                         src/Scheduler/Scheduler.cpp
+                         src/Window/Window.cpp
+                         src/Scheduler/Lab_1/SchedulerFCFS.cpp
+                         src/Scheduler/Lab_2/SchedulerRR.cpp)
+
 target_link_libraries(Scheduler PRIVATE sfml-graphics)
 target_compile_features(Scheduler PRIVATE cxx_std_17)
 

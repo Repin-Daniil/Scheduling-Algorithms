@@ -1,6 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <string>
+#include <utility>
 #include "../Window/Window.h"
 #include "../Scheduler/Scheduler.h"
 
@@ -17,15 +19,17 @@ class Application {
  public:
   using Table = std::vector<std::vector<bool>>;
 
-  Application(Settings settings) : window_(settings.width, settings.height, algo_to_title.at(settings.algorithm).data()),
-                                   scheduler_(settings.algorithm) {
+  Application(Settings settings, std::shared_ptr<scheduler::Scheduler> scheduler) : window_(settings.width,
+                                                                                            settings.height,
+                                                                                            algo_to_title.at(settings.algorithm).data()),
+                                                                                    scheduler_(std::move(scheduler)) {
   }
 
   void Start();
 
  private:
   gui::Window window_;
-  scheduler::Scheduler scheduler_;
+  std::shared_ptr<scheduler::Scheduler> scheduler_;
   Table table_;
 };
 
