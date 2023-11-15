@@ -17,13 +17,14 @@ void Application::Start() {
       } else {
         auto queue = scheduler_.AddProcess({scheduler_.GetProcessAmount(), time});
 
-        window_.SetTimeout(static_cast<double>(scheduler_.GetMiddleTimeout()));
-        window_.SetRuntime(static_cast<double>(scheduler_.GetMiddleRuntime()));
+        window_.SetTimeout(static_cast<double>(scheduler_.GetAverageTimeout()));
+        window_.SetRuntime(static_cast<double>(scheduler_.GetAverageRuntime()));
 
         table_.clear();
         table_.resize(scheduler_.GetProcessAmount());
 
         std::vector<bool> is_finished(scheduler_.GetProcessAmount());
+        std::vector<int> current_time(scheduler_.GetProcessAmount());
 
         while (!queue.empty()) {
           for (size_t i = 0; i < scheduler_.GetProcessAmount(); ++i) {
@@ -31,10 +32,14 @@ void Application::Start() {
               continue;
             }
 
-            is_finished[i] = is_finished[i] + (queue.front().id == i);
 
-            for (size_t j = 0; j < queue.front().time; ++j) {
-              table_[i].push_back(is_finished[i]);
+            if (queue.front() == i) {
+              table_[i].push_back(true);
+
+              is_finished[i] = is_finished[i] + (++current_time[i] == scheduler_.GetProcessTime(i));
+            }
+            else {
+              table_[i].push_back(false);
             }
           }
 
@@ -42,6 +47,25 @@ void Application::Start() {
         }
       }
     }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//        while (!queue.empty()) {
+//          for (size_t i = 0; i < scheduler_.GetProcessAmount(); ++i) {
+//            if (is_finished[i]) {
+//              continue;
+//            }
+//
+//            is_finished[i] = is_finished[i] + (queue.front().id == i);
+//
+//            for (size_t j = 0; j < queue.front().time; ++j) {
+//              table_[i].push_back(is_finished[i]);
+//            }
+//          }
+//
+//          queue.pop();
+//        }
+//      }
+//    }
 
     window_.Clear();
 

@@ -5,7 +5,7 @@ int main() {
   try {
     app::Application app({ApplicationConstants::WIDTH,
                           ApplicationConstants::HEIGHT,
-                          Algorithm::FCFS});
+                          Algorithm::RR});
 
     app.Start();
   }
