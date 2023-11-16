@@ -37,5 +37,6 @@ enum Algorithm { FCFS, RR, SJF, PSJF, RR_SJF };
 
 const std::unordered_map<Algorithm, std::string_view> algo_to_title{
     {FCFS, ApplicationConstants::FCFS_TITLE},
-    {RR, ApplicationConstants::RR_TITLE}
+    {RR, ApplicationConstants::RR_TITLE},
+    {SJF, ApplicationConstants::SJF_TITLE}
 };

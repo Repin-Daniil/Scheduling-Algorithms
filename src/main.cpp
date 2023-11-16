@@ -2,6 +2,7 @@
 #include "Application/Application.h"
 #include "Scheduler/Lab_1/SchedulerFCFS.h"
 #include "Scheduler/Lab_2/SchedulerRR.h"
+#include "Scheduler/Lab_2/SchedulerSJF.h"
 
 int main() {
   try {
@@ -12,6 +13,8 @@ int main() {
       scheduler = std::make_shared<scheduler::SchedulerFCFS>();
     } else if (algo == Algorithm::RR) {
       scheduler = std::make_shared<scheduler::SchedulerRR>();
+    } else if (algo == Algorithm::SJF) {
+      scheduler = std::make_shared<scheduler::SchedulerSJF>();
     }
 
     app::Application app({ApplicationConstants::WIDTH,

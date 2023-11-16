@@ -8,6 +8,10 @@ namespace scheduler {
 struct Process {
   unsigned int id;
   unsigned int time;
+
+  bool operator<(Process &other) {
+    return time < other.time;
+  }
 };
 
 class Scheduler {
