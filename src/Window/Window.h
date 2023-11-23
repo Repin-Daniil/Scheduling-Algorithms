@@ -61,6 +61,7 @@ class Window {
   // Methods
   std::optional<int> HandleMouseButtonPressed(sf::Vector2i cursor_position);
   void ResizeWindow(sf::Event event);
+
   // Init
   void InitWindow();
   void InitInputFields();

@@ -8,9 +8,22 @@ namespace scheduler {
 struct Process {
   unsigned int id;
   unsigned int time;
+  unsigned int entry_time;
 
-  bool operator<(Process &other) {
+  bool operator<(const Process &other) const {
+    if (time == other.time) {
+      return (entry_time < other.entry_time);
+    }
+
     return time < other.time;
+  }
+
+  bool operator>(const Process &other) const {
+    if (time == other.time) {
+      return (entry_time > other.entry_time);
+    }
+
+    return time > other.time;
   }
 };
 

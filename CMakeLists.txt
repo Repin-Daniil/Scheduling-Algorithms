@@ -15,15 +15,22 @@ add_executable(Scheduler src/main.cpp
         src/Scheduler/Scheduler.h
         src/Window/Window.h
         src/constants_storage.h
+
         src/Scheduler/Lab_1/SchedulerFCFS.h
         src/Scheduler/Lab_2/SchedulerRR.h
         src/Scheduler/Lab_2/SchedulerSJF.h
+        src/Scheduler/Lab_3/SchedulerRR_SJF.h
+        src/Scheduler/Lab_3/SchedulerPSJF.h
+
         src/Application/Application.cpp
         src/Scheduler/Scheduler.cpp
         src/Window/Window.cpp
+
         src/Scheduler/Lab_1/SchedulerFCFS.cpp
         src/Scheduler/Lab_2/SchedulerRR.cpp
-        src/Scheduler/Lab_2/SchedulerSJF.cpp)
+        src/Scheduler/Lab_2/SchedulerSJF.cpp
+        src/Scheduler/Lab_3/SchedulerRR_SJF.cpp
+        src/Scheduler/Lab_3/SchedulerPSJF.cpp)
 
 target_link_libraries(Scheduler PRIVATE sfml-graphics)
 target_compile_features(Scheduler PRIVATE cxx_std_17)
