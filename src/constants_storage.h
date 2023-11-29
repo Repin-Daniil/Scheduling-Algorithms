@@ -40,7 +40,7 @@ struct AlgoString {
   constexpr static std::string_view RR_STR = "RR"sv;
   constexpr static std::string_view SJF_STR = "SJF"sv;
   constexpr static std::string_view PSJF_STR = "PSJF"sv;
-  constexpr static std::string_view RR_SJF_STR = "RR SJF"sv;
+  constexpr static std::string_view RR_SJF_STR = "RR_SJF"sv;
 };
 
 enum Algorithm { FCFS, RR, SJF, PSJF, RR_SJF };
