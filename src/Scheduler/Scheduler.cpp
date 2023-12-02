@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "Scheduler.h"
 
 namespace scheduler {
@@ -19,8 +20,20 @@ unsigned int Scheduler::GetProcessAmount() const noexcept {
   return processes_.size();
 }
 
-unsigned int Scheduler::GetProcessTime(unsigned int process_id) const noexcept {
+unsigned int Scheduler::GetProcessTime(unsigned int process_id) const {
+  if(process_id >= processes_.size()) {
+    throw std::invalid_argument("No process");
+  }
+
   return processes_.at(process_id).time;
+}
+
+std::vector<Process> Scheduler::GetProcesses() const noexcept {
+  return processes_;
+}
+
+Scheduler::Queue Scheduler::GetJobQueue() const noexcept {
+  return job_queue_;
 }
 
 } // namespace scheduler

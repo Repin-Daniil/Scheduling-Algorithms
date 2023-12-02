@@ -38,7 +38,9 @@ class Scheduler {
   virtual double GetAverageTimeout() const noexcept;
   virtual double GetAverageRuntime() const noexcept;
   virtual unsigned int GetProcessAmount() const noexcept;
-  virtual unsigned int GetProcessTime(unsigned int process_id) const noexcept;
+  virtual unsigned int GetProcessTime(unsigned int process_id) const;
+  virtual std::vector<Process> GetProcesses() const noexcept;
+  virtual Queue GetJobQueue() const noexcept;
 
  protected:
   virtual void ResetQueue(std::queue<unsigned int> &queue);

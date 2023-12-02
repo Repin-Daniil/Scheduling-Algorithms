@@ -3,6 +3,10 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerRR_SJF::AddProcess(Process new_process) {
+  if(new_process.time == 0) {
+    return {};
+  }
+
   processes_.push_back(new_process);
 
   average_timeout_ = average_runtime_ = 0;

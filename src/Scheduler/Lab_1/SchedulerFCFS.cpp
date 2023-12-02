@@ -3,6 +3,10 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerFCFS::AddProcess(Process new_process) {
+  if(new_process.time == 0) {
+    return {};
+  }
+
   processes_.push_back(new_process);
 
   if (!job_queue_.empty()) {

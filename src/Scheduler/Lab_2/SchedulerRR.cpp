@@ -3,13 +3,17 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerRR::AddProcess(Process new_process) {
+  if (new_process.time == 0) {
+    return {};
+  }
+
   processes_.push_back(new_process);
 
   average_timeout_ = average_runtime_ = 0;
 
   ResetQueue(ready_queue_);
   ResetQueue(job_queue_);
-  
+
   for (auto &process : processes_) {
     ready_queue_.push(process.id);
   }
