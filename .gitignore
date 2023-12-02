@@ -5,4 +5,3 @@ out
 .vs
 .vscode
 cmake-build-debug-mingw
-catch.hpp

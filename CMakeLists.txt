@@ -51,17 +51,16 @@ install(TARGETS Scheduler)
 
 
 #TESTS
-FetchContent_Declare(
-        Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v3.4.0 # or a later release
-)
+add_executable(SchedulerTest tests/scheduler_tests.cpp  catch.hpp)
+target_link_libraries(SchedulerTest SchedulerLib)
 
-FetchContent_MakeAvailable(Catch2)
-add_executable(scheduler_tests tests/scheduler_tests.cpp)
-
-target_link_libraries(scheduler_tests PRIVATE SchedulerLib Catch2::Catch2WithMain)
-
-#Or with catch.hpp
-#add_executable(SchedulerTest tests/scheduler_tests.cpp  catch.hpp)
-#target_link_libraries(SchedulerTest SchedulerLib)
+#FetchContent_Declare(
+#        Catch2
+#        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+#        GIT_TAG v3.4.0 # or a later release
+#)
+#
+#FetchContent_MakeAvailable(Catch2)
+#add_executable(scheduler_tests tests/scheduler_tests.cpp)
+#
+#target_link_libraries(scheduler_tests PRIVATE SchedulerLib Catch2::Catch2WithMain)
