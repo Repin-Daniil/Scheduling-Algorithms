@@ -6,15 +6,23 @@
 #include "Scheduler/Lab_3/SchedulerRR_SJF.h"
 #include "Scheduler/Lab_3/SchedulerPSJF.h"
 
+namespace {
+Algorithm GetAlgorithmFromUser() {
+  std::string input;
+
+  std::cout << "Algorithm: ";
+  std::cin >> input;
+
+  return string_to_algo.at(input);
+}
+}
+
 int main() {
   try {
-    std::string input;
-    std::cout << "Algorithm: ";
-    std::cin >> input;
-
-    Algorithm algo = string_to_algo.at(input);
+    Algorithm algo = GetAlgorithmFromUser();
     std::shared_ptr<scheduler::Scheduler> scheduler;
 
+    //TODO А вот здесь бы фабрику прикрутить, что за ужас
     if (algo == Algorithm::FCFS) {
       scheduler = std::make_shared<scheduler::SchedulerFCFS>();
     } else if (algo == Algorithm::RR) {
@@ -27,13 +35,13 @@ int main() {
       scheduler = std::make_shared<scheduler::SchedulerRR_SJF>();
     }
 
-    app::Application app({ApplicationConstants::WIDTH,
-                          ApplicationConstants::HEIGHT,
-                          algo}, scheduler);
-
+    app::Application app(scheduler);
     app.Start();
   }
   catch (const std::exception &ex) {
     std::cerr << ex.what() << std::endl;
+    return EXIT_FAILURE;
   }
+
+  return EXIT_SUCCESS;
 }

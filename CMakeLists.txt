@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(CMakeSFMLProject LANGUAGES CXX)
+project(Scheduling-Algorithms LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
@@ -50,9 +50,31 @@ endif ()
 install(TARGETS Scheduler)
 
 
-#TESTS
-add_executable(SchedulerTest tests/scheduler_tests.cpp  catch.hpp)
-target_link_libraries(SchedulerTest SchedulerLib)
+# TESTS
+# Catch2
+add_executable(FCFS_TEST tests/Scheduler/Lab_1/FCFS_tests.cpp catch.hpp)
+target_link_libraries(FCFS_TEST SchedulerLib)
+
+add_executable(RR_TEST tests/Scheduler/Lab_2/RR_tests.cpp catch.hpp)
+target_link_libraries(RR_TEST SchedulerLib)
+
+add_executable(SJF_TEST tests/Scheduler/Lab_2/SJF_tests.cpp catch.hpp)
+target_link_libraries(SJF_TEST SchedulerLib)
+
+add_executable(RR_SJF_TEST tests/Scheduler/Lab_3/RR_SJF_tests.cpp catch.hpp)
+target_link_libraries(RR_SJF_TEST SchedulerLib)
+
+add_executable(PSJF_TEST tests/Scheduler/Lab_3/PSJF_tests.cpp catch.hpp)
+target_link_libraries(PSJF_TEST SchedulerLib)
+
+# CTest
+enable_testing()
+add_test(NAME FCFS COMMAND FCFS_TEST)
+add_test(NAME RR COMMAND RR_TEST)
+add_test(NAME SJF COMMAND SJF_TEST)
+add_test(NAME RR_SJF COMMAND RR_SJF_TEST)
+add_test(NAME PSJF COMMAND PSJF_TEST)
+
 
 #FetchContent_Declare(
 #        Catch2

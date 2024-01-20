@@ -21,7 +21,7 @@ unsigned int Scheduler::GetProcessAmount() const noexcept {
 }
 
 unsigned int Scheduler::GetProcessTime(unsigned int process_id) const {
-  if(process_id >= processes_.size()) {
+  if (process_id >= processes_.size()) {
     throw std::invalid_argument("No process");
   }
 
@@ -34,6 +34,22 @@ std::vector<Process> Scheduler::GetProcesses() const noexcept {
 
 Scheduler::Queue Scheduler::GetJobQueue() const noexcept {
   return job_queue_;
+}
+
+bool Process::operator<(const Process &other) const {
+  if (time == other.time) {
+    return (entry_time < other.entry_time);
+  }
+
+  return time < other.time;
+}
+
+bool Process::operator>(const Process &other) const {
+  if (time == other.time) {
+    return (entry_time > other.entry_time);
+  }
+
+  return time > other.time;
 }
 
 } // namespace scheduler

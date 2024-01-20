@@ -5,7 +5,7 @@ namespace app {
 void Application::Start() {
   while (window_.IsOpen()) {
     auto input = window_.Tick();
-
+//FIXME Refactor me, please! Этот код полное ...! Ну, по методам хотя бы разбей!
     if (input) {
       unsigned int time = *input;
 

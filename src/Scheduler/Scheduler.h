@@ -10,27 +10,14 @@ struct Process {
   unsigned int time;
   unsigned int entry_time;
 
-  bool operator<(const Process &other) const {
-    if (time == other.time) {
-      return (entry_time < other.entry_time);
-    }
-
-    return time < other.time;
-  }
-
-  bool operator>(const Process &other) const {
-    if (time == other.time) {
-      return (entry_time > other.entry_time);
-    }
-
-    return time > other.time;
-  }
+  bool operator<(const Process &other) const;
+  bool operator>(const Process &other) const;
 };
 
 class Scheduler {
  public:
   using Queue = std::queue<unsigned int>;
-
+  //TODO GetAlgo какой-нибудь
   virtual Queue AddProcess(Process new_process) = 0;
   virtual void Reset() = 0;
 

@@ -11,6 +11,7 @@ void Window::InitWindow() {
 }
 
 void Window::InitTimeSliceShape() {
+  time_slice_shape_.setSize(sf::Vector2f(25, 25));
   time_slice_shape_.setOutlineThickness(1);
   time_slice_shape_.setOutlineColor(sf::Color::Black);
 }
@@ -51,6 +52,7 @@ void Window::InitLabels() {
 }
 
 void Window::InitInputFields() {
+  input_field_.setSize(sf::Vector2f(250, 30));
   input_field_.setFillColor(sf::Color::Black);
   input_field_.setOutlineThickness(2);
   input_field_.setOutlineColor(sf::Color::White);
