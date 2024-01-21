@@ -6,6 +6,9 @@ namespace scheduler {
 
 class SchedulerRR : public Scheduler {
  public:
+  SchedulerRR() : Scheduler(RR) {
+  }
+
   Queue AddProcess(Process new_process) override;
   void Reset() override;
 

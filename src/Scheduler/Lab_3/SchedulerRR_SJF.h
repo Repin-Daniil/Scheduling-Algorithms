@@ -8,6 +8,9 @@ class SchedulerRR_SJF : public Scheduler {
  public:
   using PriorityQueue = std::priority_queue<Process, std::vector<Process>, std::greater<>>;
 
+  SchedulerRR_SJF() : Scheduler(RR_SJF) {
+  }
+
   Queue AddProcess(Process new_process) override;
   void Reset() override;
 

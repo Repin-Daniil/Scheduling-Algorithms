@@ -1,3 +1,4 @@
+#include <variant>
 #include "Window.h"
 
 namespace gui {
@@ -63,7 +64,7 @@ bool Window::IsOpen() const noexcept {
   return window_.isOpen();
 }
 
-std::optional<int> Window::Tick() {
+UserChoice Window::Tick() {
   sf::Event event{};
 
   if (window_.pollEvent(event)) {
@@ -81,24 +82,28 @@ std::optional<int> Window::Tick() {
     }
   }
 
-  return std::nullopt;
+  return {NOTHING};
 }
 
-std::optional<int> Window::HandleMouseButtonPressed(sf::Vector2i cursor_position) {
+UserChoice Window::HandleMouseButtonPressed(sf::Vector2i cursor_position) {
   if (add_process_.getGlobalBounds().contains(cursor_position.x, cursor_position.y)) {
     int time = std::atoi(input_text_.getString().toAnsiString().c_str());
 
-    if (time > 0) {
-      return time;
+    if(time < 0) {
+      return {NOTHING};
     }
+
+    return {ADD_PROCESS, static_cast<unsigned int>(time)};
   } else if (reset_.getGlobalBounds().contains(cursor_position.x, cursor_position.y)) {
-    return 0;
+    return {RESET};
   }
 
-  return std::nullopt;
+  return {NOTHING};
 }
 
-void Window::Update() {
+void Window::Update(const std::vector<std::vector<bool>> &table) {
+  Clear();
+
   window_.draw(add_process_border_);
   window_.draw(reset_border_);
   window_.draw(add_process_);
@@ -112,6 +117,8 @@ void Window::Update() {
       EnglishLabels::MIDDLE_TIMEOUT.data() + std::to_string(static_cast<double>(current_timeout_)));
   average_runtime_label_.setString(
       EnglishLabels::MIDDLE_RUNTIME.data() + std::to_string(static_cast<double>(current_runtime_)));
+
+  DrawTable(table);
 
   window_.display();
 }

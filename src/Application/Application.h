@@ -13,15 +13,16 @@ class Application {
  public:
   using Table = std::vector<std::vector<bool>>;
 
-//  Application(std::shared_ptr<scheduler::Scheduler> scheduler) : window_(algo_to_title.at(scheduler.GetAlgorithm())),
-//                                                                 scheduler_(std::move(scheduler)) {
-//  }
-
-  Application(std::shared_ptr<scheduler::Scheduler> scheduler) : window_("Title"),
-                                                                 scheduler_(std::move(scheduler)) {
+  Application(std::shared_ptr<scheduler::Scheduler> scheduler)
+      : window_(algo_to_title.at(scheduler->GetAlgorithm()).data()),
+        scheduler_(std::move(scheduler)) {
   }
 
   void Start();
+
+ private:
+  void Reset();
+  void RenderTable(std::queue<unsigned int> queue);
 
  private:
   gui::Window window_;

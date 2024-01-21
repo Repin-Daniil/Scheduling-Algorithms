@@ -36,6 +36,10 @@ Scheduler::Queue Scheduler::GetJobQueue() const noexcept {
   return job_queue_;
 }
 
+Algorithm Scheduler::GetAlgorithm() const noexcept {
+  return algorithm_;
+}
+
 bool Process::operator<(const Process &other) const {
   if (time == other.time) {
     return (entry_time < other.entry_time);

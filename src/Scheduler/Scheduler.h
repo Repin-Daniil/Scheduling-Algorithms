@@ -17,7 +17,10 @@ struct Process {
 class Scheduler {
  public:
   using Queue = std::queue<unsigned int>;
-  //TODO GetAlgo какой-нибудь
+
+  Scheduler(Algorithm algo) : algorithm_(algo) {
+  }
+
   virtual Queue AddProcess(Process new_process) = 0;
   virtual void Reset() = 0;
 
@@ -28,11 +31,13 @@ class Scheduler {
   virtual unsigned int GetProcessTime(unsigned int process_id) const;
   virtual std::vector<Process> GetProcesses() const noexcept;
   virtual Queue GetJobQueue() const noexcept;
+  virtual Algorithm GetAlgorithm() const noexcept;
 
  protected:
   virtual void ResetQueue(std::queue<unsigned int> &queue);
 
  protected:
+  const Algorithm algorithm_;
   std::vector<Process> processes_;
   Queue job_queue_;
 

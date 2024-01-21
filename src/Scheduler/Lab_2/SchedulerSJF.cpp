@@ -5,7 +5,7 @@ namespace scheduler {
 
 Scheduler::Queue SchedulerSJF::AddProcess(Process new_process) {
   if(new_process.time == 0) {
-    return {};
+    return job_queue_;
   }
 
   processes_.push_back(new_process);

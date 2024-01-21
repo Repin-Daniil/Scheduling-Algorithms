@@ -7,6 +7,9 @@ namespace scheduler {
 
 class SchedulerFCFS : public Scheduler {
  public:
+  SchedulerFCFS() : Scheduler(FCFS) {
+  }
+
   Queue AddProcess(Process new_process) override;
   void Reset() override;
 

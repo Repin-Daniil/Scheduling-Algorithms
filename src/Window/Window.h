@@ -11,6 +11,13 @@
 
 namespace gui {
 
+enum Event { NOTHING, ADD_PROCESS, RESET };
+
+struct UserChoice {
+  Event type;
+  unsigned int process_time = 0;
+};
+
 class Window {
  public:
   Window(const std::string &title) : window_({ApplicationConstants::WIDTH, ApplicationConstants::HEIGHT}, title) {
@@ -21,10 +28,8 @@ class Window {
   }
 
   // Methods
-  std::optional<int> Tick();
-  void Update();
-  void Clear();
-  void DrawTable(const std::vector<std::vector<bool>> &table);
+  UserChoice Tick();
+  void Update(const std::vector<std::vector<bool>> &table);
 
   // Setters
   void SetRuntime(double runtime);
@@ -34,8 +39,10 @@ class Window {
   bool IsOpen() const noexcept;
 
  private:
-  std::optional<int> HandleMouseButtonPressed(sf::Vector2i cursor_position);
+  UserChoice HandleMouseButtonPressed(sf::Vector2i cursor_position);
   void ResizeWindow(sf::Event event);
+  void Clear();
+  void DrawTable(const std::vector<std::vector<bool>> &table);
 
   // Init
   void InitWindow();
