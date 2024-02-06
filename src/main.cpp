@@ -22,7 +22,7 @@ int main() {
     Algorithm algo = GetAlgorithmFromUser();
     std::shared_ptr<scheduler::Scheduler> scheduler;
 
-    //TODO А вот здесь бы фабрику прикрутить, что за ужас
+    //TODO Да это же Паттерн Стратегия! Сделать нормально!
     if (algo == Algorithm::FCFS) {
       scheduler = std::make_shared<scheduler::SchedulerFCFS>();
     } else if (algo == Algorithm::RR) {
