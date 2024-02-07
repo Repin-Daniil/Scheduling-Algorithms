@@ -20,22 +20,22 @@ Algorithm GetAlgorithmFromUser() {
 int main() {
   try {
     Algorithm algo = GetAlgorithmFromUser();
-    std::shared_ptr<scheduler::Scheduler> scheduler;
+    std::unique_ptr<scheduler::Scheduler> scheduler;
 
-    //TODO Да это же Паттерн Стратегия! Сделать нормально!
+    // TODO Да это же Паттерн Стратегия! Сделать нормально!
     if (algo == Algorithm::FCFS) {
-      scheduler = std::make_shared<scheduler::SchedulerFCFS>();
+      scheduler = std::make_unique<scheduler::SchedulerFCFS>();
     } else if (algo == Algorithm::RR) {
-      scheduler = std::make_shared<scheduler::SchedulerRR>();
+      scheduler = std::make_unique<scheduler::SchedulerRR>();
     } else if (algo == Algorithm::SJF) {
-      scheduler = std::make_shared<scheduler::SchedulerSJF>();
+      scheduler = std::make_unique<scheduler::SchedulerSJF>();
     } else if (algo == Algorithm::PSJF) {
-      scheduler = std::make_shared<scheduler::SchedulerPSJF>();
+      scheduler = std::make_unique<scheduler::SchedulerPSJF>();
     } else if (algo == Algorithm::RR_SJF) {
-      scheduler = std::make_shared<scheduler::SchedulerRR_SJF>();
+      scheduler = std::make_unique<scheduler::SchedulerRR_SJF>();
     }
 
-    app::Application app(scheduler);
+    app::Application app(std::move(scheduler));
     app.Start();
   }
   catch (const std::exception &ex) {

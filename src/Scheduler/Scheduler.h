@@ -1,14 +1,18 @@
 #pragma once
 
 #include <queue>
+#include <stdexcept>
+#include <vector>
+#include <utility>
+
 #include "../constants_storage.h"
 
 namespace scheduler {
 
 struct Process {
-  unsigned int id;
-  unsigned int time;
-  unsigned int entry_time;
+  int id;
+  int time;
+  int entry_time;
 
   bool operator<(const Process &other) const;
   bool operator>(const Process &other) const;
@@ -16,25 +20,27 @@ struct Process {
 
 class Scheduler {
  public:
-  using Queue = std::queue<unsigned int>;
+  using Queue = std::queue<int>;
 
-  Scheduler(Algorithm algo) : algorithm_(algo) {
+  explicit Scheduler(Algorithm algo) : algorithm_(algo) {
   }
 
-  virtual Queue AddProcess(Process new_process) = 0;
-  virtual void Reset() = 0;
+  virtual ~Scheduler() = default;
 
-  // Getters
-  virtual double GetAverageTimeout() const noexcept;
-  virtual double GetAverageRuntime() const noexcept;
-  virtual unsigned int GetProcessAmount() const noexcept;
-  virtual unsigned int GetProcessTime(unsigned int process_id) const;
-  virtual std::vector<Process> GetProcesses() const noexcept;
-  virtual Queue GetJobQueue() const noexcept;
-  virtual Algorithm GetAlgorithm() const noexcept;
+  void Reset();
+  virtual Queue AddProcess(Process new_process) = 0;
+
+  [[nodiscard]] virtual double GetAverageTimeout() const noexcept;
+  [[nodiscard]] virtual double GetAverageRuntime() const noexcept;
+  [[nodiscard]] virtual int GetProcessAmount() const noexcept;
+  [[nodiscard]] virtual int GetProcessTime(int process_id) const;
+  [[nodiscard]] virtual std::vector<Process> GetProcesses() const noexcept;
+  [[nodiscard]] virtual Queue GetJobQueue() const noexcept;
+  [[nodiscard]] virtual Algorithm GetAlgorithm() const noexcept;
 
  protected:
-  virtual void ResetQueue(std::queue<unsigned int> &queue);
+  virtual void ResetQueues();
+  virtual void ResetSpecific();
 
  protected:
   const Algorithm algorithm_;
@@ -45,4 +51,4 @@ class Scheduler {
   double average_runtime_ = 0.0;
 };
 
-} // namespace scheduler
+}  // namespace scheduler

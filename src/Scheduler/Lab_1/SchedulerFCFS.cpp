@@ -3,7 +3,7 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerFCFS::AddProcess(Process new_process) {
-  if(new_process.time == 0) {
+  if (new_process.time == 0) {
     return job_queue_;
   }
 
@@ -20,19 +20,15 @@ Scheduler::Queue SchedulerFCFS::AddProcess(Process new_process) {
   average_timeout_ = duration_of_waiting_ / (processes_.size());
   average_runtime_ = duration_of_execution_ / (processes_.size());
 
-  for (unsigned int i = 0; i < new_process.time; ++i) {
+  for (int i = 0; i < new_process.time; ++i) {
     job_queue_.push(new_process.id);
   }
 
   return job_queue_;
 }
 
-void SchedulerFCFS::Reset() {
-  ResetQueue(job_queue_);
-  processes_.clear();
-
-  average_timeout_ = average_runtime_ = 0;
+void SchedulerFCFS::ResetSpecific() {
   duration_of_execution_ = duration_of_waiting_ = last_execution_time_ = 0;
 }
 
-} // scheduler
+}  // namespace scheduler

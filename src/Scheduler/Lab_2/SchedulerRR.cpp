@@ -11,15 +11,14 @@ Scheduler::Queue SchedulerRR::AddProcess(Process new_process) {
 
   average_timeout_ = average_runtime_ = 0;
 
-  ResetQueue(ready_queue_);
-  ResetQueue(job_queue_);
+  ResetQueues();
 
   for (auto &process : processes_) {
     ready_queue_.push(process.id);
   }
 
-  unsigned int time = 0;
-  std::vector<unsigned int> current_process_time(processes_.size(), 0);
+  int time = 0;
+  std::vector<int> current_process_time(processes_.size(), 0);
 
   while (!ready_queue_.empty()) {
     ++time;
@@ -42,12 +41,9 @@ Scheduler::Queue SchedulerRR::AddProcess(Process new_process) {
   return job_queue_;
 }
 
-void SchedulerRR::Reset() {
-  ResetQueue(job_queue_);
-  ResetQueue(ready_queue_);
-  processes_.clear();
-
-  average_timeout_ = average_runtime_ = 0;
+void SchedulerRR::ResetSpecific() {
+  std::queue<int> empty;
+  std::swap(ready_queue_, empty);
 }
 
-} // namespace scheduler
+}  // namespace scheduler

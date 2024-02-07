@@ -4,20 +4,18 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerSJF::AddProcess(Process new_process) {
-  if(new_process.time == 0) {
+  if (new_process.time == 0) {
     return job_queue_;
   }
 
   processes_.push_back(new_process);
 
-  average_timeout_ = average_runtime_ = 0;
-
-  ResetQueue(job_queue_);
+  ResetQueues();
 
   auto sorted = processes_;
   std::sort(sorted.begin(), sorted.end());
 
-  unsigned int time = 0;
+  int time = 0;
 
   for (auto &process : sorted) {
     for (size_t i = 0; i < process.time; ++i) {
@@ -35,11 +33,4 @@ Scheduler::Queue SchedulerSJF::AddProcess(Process new_process) {
   return job_queue_;
 }
 
-void SchedulerSJF::Reset() {
-  ResetQueue(job_queue_);
-  processes_.clear();
-
-  average_timeout_ = average_runtime_ = 0;
-}
-
-} // namespace scheduler
+}  // namespace scheduler

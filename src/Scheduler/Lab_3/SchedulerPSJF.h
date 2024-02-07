@@ -1,5 +1,8 @@
 #pragma once
 
+#include <unordered_map>
+#include <vector>
+
 #include "../Scheduler.h"
 
 namespace scheduler {
@@ -10,7 +13,6 @@ class SchedulerPSJF : public Scheduler {
   }
 
   Queue AddProcess(Process new_process) override;
-  void Reset() override;
 };
 
-} // scheduler
+}  // namespace scheduler

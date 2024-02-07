@@ -3,24 +3,22 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerRR_SJF::AddProcess(Process new_process) {
-  if(new_process.time == 0) {
+  if (new_process.time == 0) {
     return job_queue_;
   }
 
   processes_.push_back(new_process);
 
-  average_timeout_ = average_runtime_ = 0;
-  ResetPriorityQueue(ready_queue_);
-  ResetQueue(job_queue_);
+  ResetQueues();
 
-  unsigned int order = 0;
+  int order = 0;
 
   for (auto &process : processes_) {
     ready_queue_.push({process.id, process.time, order++});
   }
 
-  unsigned int time = 0;
-  std::vector<unsigned int> current_process_time(processes_.size(), 0);
+  int time = 0;
+  std::vector<int> current_process_time(processes_.size(), 0);
 
   while (!ready_queue_.empty()) {
     auto process_id = ready_queue_.top().id;
@@ -44,17 +42,9 @@ Scheduler::Queue SchedulerRR_SJF::AddProcess(Process new_process) {
   return job_queue_;
 }
 
-void SchedulerRR_SJF::Reset() {
-  ResetQueue(job_queue_);
-  ResetPriorityQueue(ready_queue_);
-  processes_.clear();
-
-  average_timeout_ = average_runtime_ = 0;
-}
-
-void SchedulerRR_SJF::ResetPriorityQueue(SchedulerRR_SJF::PriorityQueue &queue) {
+void SchedulerRR_SJF::ResetSpecific() {
   PriorityQueue empty;
-  std::swap(queue, empty);
+  std::swap(ready_queue_, empty);
 }
 
-} // namespace scheduler
+}  // namespace scheduler

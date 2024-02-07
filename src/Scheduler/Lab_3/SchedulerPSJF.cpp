@@ -5,20 +5,19 @@
 namespace scheduler {
 
 Scheduler::Queue SchedulerPSJF::AddProcess(Process new_process) {
-  if(new_process.time == 0) {
+  if (new_process.time == 0) {
     return job_queue_;
   }
 
   processes_.push_back(new_process);
 
-  average_timeout_ = average_runtime_ = 0;
-  ResetQueue(job_queue_);
+  ResetQueues();
 
-  std::unordered_map<unsigned int, Process> ready_processes;
-  std::vector<unsigned int> remaining_time;
+  std::unordered_map<int, Process> ready_processes;
+  std::vector<int> remaining_time;
 
-  unsigned int time = 0;
-  size_t amount_of_served_processes = 0;
+  int time = 0;
+  int amount_of_served_processes = 0;
 
   while (!ready_processes.empty() || amount_of_served_processes < processes_.size()) {
     if (amount_of_served_processes < processes_.size()) {
@@ -27,8 +26,8 @@ Scheduler::Queue SchedulerPSJF::AddProcess(Process new_process) {
       ++amount_of_served_processes;
     }
 
-    unsigned int process_id = std::distance(remaining_time.begin(), std::min_element(remaining_time.begin(),
-                                                                                     remaining_time.end()));
+    int process_id = std::distance(remaining_time.begin(), std::min_element(remaining_time.begin(),
+                                                                            remaining_time.end()));
 
     ++time;
     --remaining_time[process_id];
@@ -38,7 +37,7 @@ Scheduler::Queue SchedulerPSJF::AddProcess(Process new_process) {
       average_runtime_ += time;
 
       ready_processes.erase(process_id);
-      remaining_time[process_id] = std::numeric_limits<unsigned int>::max();
+      remaining_time[process_id] = std::numeric_limits<int>::max();
     }
 
     job_queue_.push(process_id);
@@ -50,11 +49,4 @@ Scheduler::Queue SchedulerPSJF::AddProcess(Process new_process) {
   return job_queue_;
 }
 
-void SchedulerPSJF::Reset() {
-  ResetQueue(job_queue_);
-  processes_.clear();
-
-  average_timeout_ = average_runtime_ = 0;
-}
-
-} // namespace scheduler
+}  // namespace scheduler

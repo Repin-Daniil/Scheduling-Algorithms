@@ -1,5 +1,10 @@
 #pragma once
 
+#include <vector>
+#include <utility>
+#include <queue>
+#include <functional>
+
 #include "../Scheduler.h"
 
 namespace scheduler {
@@ -12,13 +17,12 @@ class SchedulerRR_SJF : public Scheduler {
   }
 
   Queue AddProcess(Process new_process) override;
-  void Reset() override;
 
  private:
-  void ResetPriorityQueue(PriorityQueue &queue);
+  void ResetSpecific() override;
 
  private:
   PriorityQueue ready_queue_;
 };
 
-} // scheduler
+}  // namespace scheduler

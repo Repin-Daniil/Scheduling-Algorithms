@@ -6,7 +6,7 @@ void Application::Start() {
   while (window_.IsOpen()) {
     gui::UserChoice user_choice = window_.Tick();
 
-    if (user_choice.type == gui::RESET) { // Reset
+    if (user_choice.type == gui::RESET) {
       Reset();
     } else if (user_choice.type == gui::ADD_PROCESS) {
       auto queue = scheduler_->AddProcess({scheduler_->GetProcessAmount(), user_choice.process_time});
@@ -28,7 +28,7 @@ void Application::Reset() {
   window_.SetTimeout(0.0);
 }
 
-void Application::RenderTable(std::queue<unsigned int> queue) {
+void Application::RenderTable(std::queue<int> queue) {
   table_.clear();
   table_.resize(scheduler_->GetProcessAmount());
 
@@ -36,7 +36,7 @@ void Application::RenderTable(std::queue<unsigned int> queue) {
   std::vector<int> current_time(scheduler_->GetProcessAmount());
 
   while (!queue.empty()) {
-    for (size_t i = 0; i < scheduler_->GetProcessAmount(); ++i) {
+    for (int i = 0; i < scheduler_->GetProcessAmount(); ++i) {
       if (is_finished[i]) {
         continue;
       }
@@ -55,4 +55,4 @@ void Application::RenderTable(std::queue<unsigned int> queue) {
   }
 }
 
-} // namespace app
+}  // namespace app

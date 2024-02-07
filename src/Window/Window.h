@@ -1,6 +1,9 @@
 #pragma once
 
 #include <optional>
+#include <string>
+#include <vector>
+
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Graphics/Font.hpp"
 #include "SFML/Graphics/Text.hpp"
@@ -14,13 +17,14 @@ namespace gui {
 enum Event { NOTHING, ADD_PROCESS, RESET };
 
 struct UserChoice {
-  Event type;
-  unsigned int process_time = 0;
+  Event type = NOTHING;
+  int process_time = 0;
 };
 
 class Window {
  public:
-  Window(const std::string &title) : window_({ApplicationConstants::WIDTH, ApplicationConstants::HEIGHT}, title) {
+  explicit Window(const std::string &title) : window_({ApplicationConstants::WIDTH, ApplicationConstants::HEIGHT},
+                                                      title) {
     InitWindow();
     InitInputFields();
     InitLabels();
@@ -51,9 +55,9 @@ class Window {
   void InitTimeSliceShape();
 
   // Predicates
-  bool IsMouseClicked(sf::Event event);
-  bool IsBackspacePressed(sf::Event event);
-  bool IsDigitInput(sf::Event event);
+  bool IsMouseClicked(const sf::Event &event);
+  bool IsBackspacePressed(const sf::Event &event);
+  bool IsDigitInput(const sf::Event &event);
 
  private:
   double current_timeout_ = 0.0;
@@ -75,4 +79,4 @@ class Window {
   sf::Text input_text_;
 };
 
-} // namespace gui
+}  // namespace gui

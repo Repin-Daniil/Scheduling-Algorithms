@@ -26,13 +26,13 @@ struct ApplicationConstants {
   constexpr static std::string_view PATH_TO_FONT = "res/TimesNewRomanRegular.ttf"sv;
 
   // Window
-  const static unsigned int WIDTH = 1600u;
-  const static unsigned int HEIGHT = 900u;
+  constexpr static int WIDTH = 1600;
+  constexpr static int HEIGHT = 900;
 
   // Process cell
-  const static unsigned int MARGIN_LEFT = 45u;
-  const static unsigned int MARGIN_TOP = 10u;
-  const static unsigned int CELL_SIZE = 25u;
+  constexpr static int MARGIN_LEFT = 45;
+  constexpr static int MARGIN_TOP = 10;
+  constexpr static int CELL_SIZE = 25;
 };
 
 struct AlgoString {

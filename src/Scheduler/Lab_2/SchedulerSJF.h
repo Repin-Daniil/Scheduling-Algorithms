@@ -10,7 +10,6 @@ class SchedulerSJF : public Scheduler {
   }
 
   Queue AddProcess(Process new_process) override;
-  void Reset() override;
 };
 
-} // scheduler
+}  // namespace scheduler

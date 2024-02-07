@@ -1,5 +1,8 @@
 #pragma once
 
+#include <queue>
+#include <utility>
+
 #include "../../constants_storage.h"
 #include "../Scheduler.h"
 
@@ -11,12 +14,14 @@ class SchedulerFCFS : public Scheduler {
   }
 
   Queue AddProcess(Process new_process) override;
-  void Reset() override;
 
  private:
-  unsigned int duration_of_execution_ = 0;
-  unsigned int duration_of_waiting_ = 0;
-  unsigned int last_execution_time_ = 0;
+  void ResetSpecific() override;
+
+ private:
+  int duration_of_execution_ = 0;
+  int duration_of_waiting_ = 0;
+  int last_execution_time_ = 0;
 };
 
-} // scheduler
+}  // namespace scheduler

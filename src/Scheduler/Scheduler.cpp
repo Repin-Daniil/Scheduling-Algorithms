@@ -1,11 +1,21 @@
-#include <stdexcept>
 #include "Scheduler.h"
 
 namespace scheduler {
 
-void Scheduler::ResetQueue(std::queue<unsigned int> &queue) {
-  std::queue<unsigned int> empty;
-  std::swap(queue, empty);
+void Scheduler::Reset() {
+  ResetQueues();
+  processes_.clear();
+}
+
+void Scheduler::ResetQueues() {
+  std::queue<int> empty;
+  std::swap(job_queue_, empty);
+  average_timeout_ = average_runtime_ = 0;
+
+  ResetSpecific();
+}
+
+void Scheduler::ResetSpecific() {
 }
 
 double Scheduler::GetAverageRuntime() const noexcept {
@@ -16,11 +26,11 @@ double Scheduler::GetAverageTimeout() const noexcept {
   return average_timeout_;
 }
 
-unsigned int Scheduler::GetProcessAmount() const noexcept {
+int Scheduler::GetProcessAmount() const noexcept {
   return processes_.size();
 }
 
-unsigned int Scheduler::GetProcessTime(unsigned int process_id) const {
+int Scheduler::GetProcessTime(int process_id) const {
   if (process_id >= processes_.size()) {
     throw std::invalid_argument("No process");
   }
@@ -56,4 +66,4 @@ bool Process::operator>(const Process &other) const {
   return time > other.time;
 }
 
-} // namespace scheduler
+}  // namespace scheduler

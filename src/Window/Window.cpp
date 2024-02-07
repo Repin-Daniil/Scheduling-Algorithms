@@ -86,15 +86,17 @@ UserChoice Window::Tick() {
 }
 
 UserChoice Window::HandleMouseButtonPressed(sf::Vector2i cursor_position) {
-  if (add_process_.getGlobalBounds().contains(cursor_position.x, cursor_position.y)) {
-    int time = std::atoi(input_text_.getString().toAnsiString().c_str());
+  if (add_process_.getGlobalBounds().contains(static_cast<float>(cursor_position.x),
+                                              static_cast<float>(cursor_position.y))) {
+    int time = std::stoi(input_text_.getString().toAnsiString());
 
-    if(time < 0) {
+    if (time < 0) {
       return {NOTHING};
     }
 
-    return {ADD_PROCESS, static_cast<unsigned int>(time)};
-  } else if (reset_.getGlobalBounds().contains(cursor_position.x, cursor_position.y)) {
+    return {ADD_PROCESS, time};
+  } else if (reset_.getGlobalBounds().contains(static_cast<float>(cursor_position.x),
+                                               static_cast<float>(cursor_position.y))) {
     return {RESET};
   }
 
@@ -124,15 +126,15 @@ void Window::Update(const std::vector<std::vector<bool>> &table) {
 }
 
 void Window::DrawTable(const std::vector<std::vector<bool>> &table) {
-  unsigned int x = ApplicationConstants::MARGIN_LEFT;
-  unsigned int y = ApplicationConstants::MARGIN_TOP;
+  int x = ApplicationConstants::MARGIN_LEFT;
+  int y = ApplicationConstants::MARGIN_TOP;
 
   for (auto &process : table) {
     for (auto time_slice_status : process) {
       auto color = (time_slice_status ? sf::Color::Green : sf::Color::Red);
 
       time_slice_shape_.setFillColor(color);
-      time_slice_shape_.setPosition(x, y);
+      time_slice_shape_.setPosition(static_cast<float>(x), static_cast<float>(y));
 
       x += ApplicationConstants::CELL_SIZE;
 
@@ -161,21 +163,21 @@ void Window::SetTimeout(double timeout) {
   current_timeout_ = timeout;
 }
 
-bool Window::IsDigitInput(sf::Event event) {
-  unsigned int backspace_code = 8;
-  unsigned int ascii_scope = 128;
+bool Window::IsDigitInput(const sf::Event &event) {
+  int backspace_code = 8;
+  int ascii_scope = 128;
 
   return ((event.type == sf::Event::TextEntered) &&
       (event.text.unicode < ascii_scope && event.text.unicode != backspace_code) &&
       std::isdigit(static_cast<char>(event.text.unicode)));
 }
 
-bool Window::IsBackspacePressed(sf::Event event) {
+bool Window::IsBackspacePressed(const sf::Event &event) {
   return (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Backspace);
 }
 
-bool Window::IsMouseClicked(sf::Event event) {
+bool Window::IsMouseClicked(const sf::Event &event) {
   return (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left);
 }
 
-} // namespace gui
+}  // namespace gui
