@@ -17,8 +17,8 @@ Scheduler::Queue SchedulerFCFS::AddProcess(Process new_process) {
   last_execution_time_ += new_process.time;
   duration_of_execution_ += new_process.time;
 
-  average_timeout_ = duration_of_waiting_ / (processes_.size());
-  average_runtime_ = duration_of_execution_ / (processes_.size());
+  average_timeout_ = duration_of_waiting_ / processes_.size();
+  average_runtime_ = duration_of_execution_ / processes_.size();
 
   for (int i = 0; i < new_process.time; ++i) {
     job_queue_.push(new_process.id);

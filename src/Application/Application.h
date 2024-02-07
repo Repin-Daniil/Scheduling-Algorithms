@@ -8,6 +8,7 @@
 
 #include "../Window/Window.h"
 #include "../Scheduler/Scheduler.h"
+#include "../Scheduler/SchedulerFactory.h"
 
 namespace app {
 
@@ -15,9 +16,8 @@ class Application {
  public:
   using Table = std::vector<std::vector<bool>>;
 
-  explicit Application(std::unique_ptr<scheduler::Scheduler> scheduler)
-      : window_(algo_to_title.at(scheduler->GetAlgorithm()).data()),
-        scheduler_(std::move(scheduler)) {
+  explicit Application(Algorithm algo) : window_(algo_to_title.at(algo).data()) {
+    scheduler_ = scheduler::SchedulerFactory::CreateScheduler(algo);
   }
 
   void Start();

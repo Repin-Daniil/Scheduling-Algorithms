@@ -5,9 +5,9 @@ project(Scheduling-Algorithms LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -std=c++20")
-endif()
+endif ()
 
 include(FetchContent)
 FetchContent_Declare(SFML
@@ -17,7 +17,8 @@ FetchContent_MakeAvailable(SFML)
 
 add_library(SchedulerLib STATIC
         src/Scheduler/Scheduler.h
-        src/Scheduler/Scheduler.cpp
+        src/Scheduler/SchedulerFactory.h
+        src/constants_storage.h
 
         src/Scheduler/Lab_1/SchedulerFCFS.h
         src/Scheduler/Lab_2/SchedulerRR.h
@@ -25,6 +26,7 @@ add_library(SchedulerLib STATIC
         src/Scheduler/Lab_3/SchedulerRR_SJF.h
         src/Scheduler/Lab_3/SchedulerPSJF.h
 
+        src/Scheduler/Scheduler.cpp
         src/Scheduler/Lab_1/SchedulerFCFS.cpp
         src/Scheduler/Lab_2/SchedulerRR.cpp
         src/Scheduler/Lab_2/SchedulerSJF.cpp
@@ -34,12 +36,9 @@ add_library(SchedulerLib STATIC
 add_executable(Scheduler src/main.cpp
         src/Application/Application.h
         src/Window/Window.h
-        src/constants_storage.h
-
 
         src/Application/Application.cpp
-        src/Window/Window.cpp
-        )
+        src/Window/Window.cpp)
 
 target_link_libraries(Scheduler PRIVATE SchedulerLib sfml-graphics)
 target_compile_features(Scheduler PRIVATE cxx_std_17)
@@ -53,7 +52,6 @@ if (WIN32)
 endif ()
 
 install(TARGETS Scheduler)
-
 
 # TESTS
 # Catch2
@@ -79,7 +77,6 @@ add_test(NAME RR COMMAND RR_TEST)
 add_test(NAME SJF COMMAND SJF_TEST)
 add_test(NAME RR_SJF COMMAND RR_SJF_TEST)
 add_test(NAME PSJF COMMAND PSJF_TEST)
-
 
 #FetchContent_Declare(
 #        Catch2

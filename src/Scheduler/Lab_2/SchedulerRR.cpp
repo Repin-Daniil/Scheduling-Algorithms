@@ -9,8 +9,6 @@ Scheduler::Queue SchedulerRR::AddProcess(Process new_process) {
 
   processes_.push_back(new_process);
 
-  average_timeout_ = average_runtime_ = 0;
-
   ResetQueues();
 
   for (auto &process : processes_) {
