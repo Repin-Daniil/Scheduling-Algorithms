@@ -3,7 +3,22 @@ name: CI
 on: [ push, pull_request ]
 
 jobs:
-  build:
+  cpplint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install cpplint
+        run: pip3 install cpplint
+      - name: Lint C++ files
+        run: |
+          cd src
+          echo "filter=-legal/copyright,-readability/todo, -build/namespaces_literals,-build/include_subdir
+                linelength=120" > CPPLINT.cfg
+          cpplint --recursive .
+
+  test:
+    needs: cpplint
     name: ${{ matrix.platform.name }} ${{ matrix.config.name }}
     runs-on: ${{ matrix.platform.os }}
 
